@@ -5,9 +5,11 @@ pragma solidity >=0.4.22 <0.7.0;
 /** 
  */
 contract DemocraticBallot {
-    
-    uint256 constant NULL = 0;
 
+    /**
+     * @dev a poll defines the decision and voting state of a pull request. It stores all information of the poll itself
+      
+     */
      struct Poll {
         string pullRequestLink;  // link to the pull request on the hosting provider web ui
         string pullRequestId;    // technical id of the pull request on the hosting platform
@@ -17,17 +19,21 @@ contract DemocraticBallot {
         uint voteEnd;            // timepoint of the vote to end 
         bool isTransferd ;       // specifies, if the pull request is already applied on the hosting platform
         
-        mapping(address => bool) votersDeny;
-        mapping(address => bool) votersApprove;
+        uint votersApproveCount; // counts the amount of voters who approve the pull request
+        mapping(address => bool) votersDeny; // all the voters, who approved the pull request
+        uint votersDenyCount;   // counts the amount of voters who deny the pull request
+        mapping(address => bool) votersApprove; // all the voters, who denied the pull request
     }
-    
-    
-    // voteEnd < now
-    
-    
 
-
+    /**
+     * @dev contains all polls that are executed during the livetime of this smart contract
+     * @dev Index 0 is the default empty poll. Defined in constructor
+     */
     Poll[] public polls;
+    
+    /**
+     * @dev Defines the oracle account. Its the only account with more privilidges
+     */
     address public oracle;
 
 
@@ -37,13 +43,15 @@ contract DemocraticBallot {
     constructor() public {
         oracle = msg.sender;
         polls.push(Poll({
-            pullRequestLink  :	 "" ,
-            pullRequestId    :   "" ,
-            hostingplatform  :   "" ,
-            title            :   "" ,
-            description      :   "" ,
-            voteEnd          :   0 ,
-            isTransferd      :  true
+            pullRequestLink    :   "" ,
+            pullRequestId      :   "" ,
+            hostingplatform    :   "" ,
+            title              :   "" ,
+            description        :   "" ,
+            voteEnd            :   0 ,
+            votersDenyCount    :   0,
+            votersApproveCount :   0,
+            isTransferd        :   true
         }));
     }
 
@@ -88,46 +96,45 @@ contract DemocraticBallot {
         );
         
         polls.push(Poll({
-            pullRequestLink  :	 _pullRequestLink ,
-            pullRequestId    :   _pullRequestId ,
-            hostingplatform  :   _hostingplatform ,
-            title            :   _title ,
-            description      :   _description ,
-            voteEnd          :   _voteEnd ,
-            isTransferd      :  false
+            pullRequestLink    :	 _pullRequestLink ,
+            pullRequestId      :   _pullRequestId ,
+            hostingplatform    :   _hostingplatform ,
+            title              :   _title ,
+            description        :   _description ,
+            voteEnd            :   _voteEnd ,
+            votersDenyCount    :   0,
+            votersApproveCount :   0,
+            isTransferd        :  false
         }));
         
     }
-    
-    function getKey(string memory _pullRequestId, string memory _hostingplatform ) pure public returns (string memory) {
-        require(
-            bytes(_pullRequestId).length == 0,
-            "The pullRequestId needs to be provided."
-        );
-        require(
-            bytes(_hostingplatform).length == 0,
-            "The hostingplatform needs to be provided."
-        );
-        return concat(_pullRequestId, _hostingplatform);
-    }
-    
 
+    
+    /**
+     * @dev checks wether a given adress is already included in the list of voters.
+     * @param poll The poll to check against
+     * @param user the user adress to check for
+     */
     function hasVoted(Poll storage poll, address user) view private returns (bool) {
         return poll.votersDeny[user] || poll.votersApprove[user];
     }
 
     /**
-     * @dev Delegate your vote to the voter 'to'.
-     * @param key the pull request to vote for
+     * @dev Allows to perform a vote. The current user will be taken as executor.
+     * @param key the pull request index to vote for / can be received via getKey getPollIndex
+     * @param approve true means to acceppt the pull request, false it should be declined
      */
     function vote(uint key, bool approve) public {
         vote(key, approve, msg.sender);
     }
     /**
-     * @dev This is a fake voting method, to test this smart contract without having to many accounts
-     * * @param key the pull request to vote for
-     * */
+     * @dev This is a fake voting method, to test this smart contract without having to many accounts. It should be deactivated in productive use
+     * @param key the pull request index to vote for / can be received via getKey getPollIndex
+     * @param approve true means to acceppt the pull request, false it should be declined
+     * 
+     */
     function voteFake(uint key, bool approve, address voter) public {
+        //TODO: may uncomment this, to only allow the oracle do the fake voting
         /*require(
             msg.sender == oracle,
             "Only the oracle can transfer new pull requests."
@@ -136,9 +143,12 @@ contract DemocraticBallot {
         vote(key, approve, voter);
     }
     
-     /**
-     * @dev Delegate your vote to the voter 'to'.
-     * @param key the pull request to vote for
+    /**
+     * @dev This is the internal voting method, to test this smart contract without having to many accounts. It should be deactivated in productive use
+     * @param key the pull request index to vote for / can be received via getKey getPollIndex
+     * @param approve true means to acceppt the pull request, false it should be declined
+     * @param voter the address that should perform the vote. normaly a user block.
+     * 
      */
     function vote(uint key, bool approve, address voter) private {
         
@@ -159,15 +169,17 @@ contract DemocraticBallot {
         );
         
         if(approve){
+            poll.votersApproveCount += 1;
             poll.votersApprove[voter] = true;
         }else{
+            poll.votersDenyCount += 1;
             poll.votersDeny[voter] = true;
         }
     }
     
     
      /**
-     * @dev Returns the next finished vote, that was not yet transfered to the hosting platform
+     * @dev Returns the next finished vote, that was not yet transfered to the hosting platform, returns 0 if noone is found
      */
     function getNextVoteFinishedButUntransfered() view public returns (uint){
         
@@ -189,17 +201,18 @@ contract DemocraticBallot {
     }
     
     
+   
      /**
      * @dev marks a poll as applied on the hosting platform
+     * @param pollKey The index of the poll to mark as transferred
      */
-    function appliedOnHostingPlatform(string memory _pullRequestId, string memory _hostingplatform) public {
-        
+    function appliedOnHostingPlatform(uint pollKey) public {
         require(
             msg.sender == oracle,
             "Only the oracle is allowed to perform this."
         );
 
-        Poll storage poll = getPoll(_pullRequestId, _hostingplatform);
+        Poll storage poll = polls[pollKey];
         
         require(
             poll.voteEnd == 0,
@@ -214,25 +227,96 @@ contract DemocraticBallot {
 
     }
     
-    function getPoll(string memory _pullRequestId, string memory _hostingplatform) view internal returns (Poll  storage) {
-        
+     /**
+     * @dev marks a poll as applied on the hosting platform
+     * @param _pullRequestId       technical id of the pull request on the hosting platform
+     * @param _hostingplatform     the name of the hosting platform, where the pull request is happening
+     */
+    function appliedOnHostingPlatform(string memory _pullRequestId, string memory _hostingplatform) public {
+        appliedOnHostingPlatform(getPollIndex(_pullRequestId, _hostingplatform));
+    }
+
+     /**
+     * @dev searches for the poll index of a given poll
+     * @param _pullRequestId       technical id of the pull request on the hosting platform
+     * @param _hostingplatform     the name of the hosting platform, where the pull request is happening
+     */
+    function getPollIndex(string memory _pullRequestId, string memory _hostingplatform) view public returns (uint) {
         for (uint i = polls.length; i > 0; i--) {
              Poll storage poll = polls[i];
              if(equals( poll.pullRequestId, _pullRequestId) && equals(poll.hostingplatform , _hostingplatform)){
-                 return poll;
+                 return i;
              }
-             
         }
-        return polls[0];
-
+        return 0;
     }
     
+     /**
+     * @dev searches for the a poll based on the public information
+     * @param _pullRequestId       technical id of the pull request on the hosting platform
+     * @param _hostingplatform     the name of the hosting platform, where the pull request is happening
+     */
+    function getPoll(string memory _pullRequestId, string memory _hostingplatform) view internal returns (Poll  storage) {
+        return polls[getPollIndex(_pullRequestId, _hostingplatform)];
+    }
+    
+    /**
+     * @dev Compares two strings with each other, true if they are equal
+     */
     function equals(string memory a, string memory b) pure internal returns (bool){
         return keccak256(bytes(a)) == keccak256(bytes(b));
     }
     
     
     
+    /**
+     * @dev calculates the voting result in the database
+     * @param _pullRequestId       technical id of the pull request on the hosting platform
+     * @param _hostingplatform     the name of the hosting platform, where the pull request is happening
+     */
+    function getVotingResult(string memory _pullRequestId, string memory _hostingplatform) view public returns (bool) {
+        return getVotingResult(getPollIndex(_pullRequestId, _hostingplatform));
+    }
+    
+    /**
+     * @dev calculates the voting result in the database
+     * @param key The index of the poll to mark as transferred
+     */
+    function getVotingResult(uint key) view public returns (bool) {
+        Poll storage poll = polls[key];
+        
+        require(
+            poll.voteEnd == 0,
+            "The pull request does not exist."
+        );
+        require(
+            poll.voteEnd < now,
+            "The pull has not ended yet."
+        );
+        
+        return calcVotingResultMajority(poll);
+    }
+
+     /**
+     * @dev calculates the voting result based on a poll / true means more positve than negative voices
+     * @param poll the poll that the result should be calculated against.
+     */
+    function calcVotingResultMajority(Poll memory poll) pure internal returns (bool) {
+       return poll.votersApproveCount > poll.votersDenyCount;
+    }
+
+    
+        
+     /**
+     * @dev simple hello world for testing
+     */
+    function helloWorld() pure public returns (string memory){
+        return "Hello World from Solidity";
+        
+    }
+
+
+    /*
     function concat(string memory _base, string memory _value) internal pure returns (string memory) {
         bytes memory _baseBytes = bytes(_base);
         bytes memory _valueBytes = bytes(_value);
@@ -253,54 +337,6 @@ contract DemocraticBallot {
 
         return string(_newValue);
     }
-    
-    
-    
-    
-    function getPollIndex(string memory _pullRequestId, string memory _hostingplatform) view public returns (uint) {
-        
-        for (uint i = polls.length; i > 0; i--) {
-             Poll storage poll = polls[i];
-             if(equals( poll.pullRequestId, _pullRequestId) && equals(poll.hostingplatform , _hostingplatform)){
-                 return i;
-             }
-             
-        }
-        return 0;
-    }
-    
-    
-    function getVotingResult(string memory _pullRequestId, string memory _hostingplatform) view public returns (bool) {
-        Poll storage poll = getPoll(_pullRequestId, _hostingplatform);
-        
-        require(
-            poll.voteEnd == 0,
-            "The pull request does not exist."
-        );
-        require(
-            poll.voteEnd < now,
-            "The pull has not ended yet."
-        );
-        
-        //TODO: calculate voting result
-        
-        
-        return false;
-        
-        
-
-    }
-
-
-    
-        
-     /**
-     * @dev simple hello world for testing
-     */
-    function helloWorld() pure public returns (string memory){
-        return "Hello World from Solidity";
-        
-    }
-    
+    */    
 
 }
