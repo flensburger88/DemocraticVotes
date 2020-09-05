@@ -31,6 +31,8 @@ contract DemocraticBallot {
      */
     Poll[] public polls;
     
+    bool internal devMode;
+    
     /**
      * @dev Defines the oracle account. Its the only account with more privilidges
      */
@@ -41,6 +43,7 @@ contract DemocraticBallot {
      * @dev Create a new ballot to choose one of 'proposalNames'.
      */
     constructor() public {
+        devMode = true;
         oracle = msg.sender;
         polls.push(Poll({
             pullRequestLink    :   "" ,
@@ -66,10 +69,12 @@ contract DemocraticBallot {
      * @param _voteEnd               timepoint of the vote to end 
      */
     function submitNewPoll(string memory _pullRequestLink, string memory _pullRequestId, string memory _hostingplatform, string memory _title, string memory _description, uint _voteEnd) public {
-        require(
-            msg.sender == oracle,
-            "Only the oracle can transfer new pull requests."
-        );
+        if(!devMode){
+            require(
+                msg.sender == oracle,
+                "Only the oracle can transfer new pull requests."
+            );
+        }
         require(
             bytes(_pullRequestLink).length == 0,
             "The link needs to be provided."
@@ -134,11 +139,12 @@ contract DemocraticBallot {
      * 
      */
     function voteFake(uint key, bool approve, address voter) public {
-        //TODO: may uncomment this, to only allow the oracle do the fake voting
-        /*require(
-            msg.sender == oracle,
-            "Only the oracle can transfer new pull requests."
-        );*/
+        if(!devMode){
+            require(
+                msg.sender == oracle,
+                "Only the oracle can transfer new pull requests."
+            );
+        }
 
         vote(key, approve, voter);
     }
@@ -151,9 +157,6 @@ contract DemocraticBallot {
      * 
      */
     function vote(uint key, bool approve, address voter) private {
-        
-        
-        
         Poll storage poll = polls[key];
         require(
             poll.voteEnd == 0,
@@ -182,11 +185,12 @@ contract DemocraticBallot {
      * @dev Returns the next finished vote, that was not yet transfered to the hosting platform, returns 0 if noone is found
      */
     function getNextVoteFinishedButUntransfered() view public returns (uint){
-        
-        /*require(
-            msg.sender == oracle,
-            "Only the oracle can transfer new pull requests."
-        );*/
+        if(!devMode){
+            require(
+                msg.sender == oracle,
+                "Only the oracle can transfer new pull requests."
+            );
+        }
         
         uint currentTime = now;
         
@@ -207,10 +211,12 @@ contract DemocraticBallot {
      * @param pollKey The index of the poll to mark as transferred
      */
     function appliedOnHostingPlatform(uint pollKey) public {
-        require(
-            msg.sender == oracle,
-            "Only the oracle is allowed to perform this."
-        );
+        if(!devMode){
+            require(
+                msg.sender == oracle,
+                "Only the oracle is allowed to perform this."
+            );
+        }
 
         Poll storage poll = polls[pollKey];
         
@@ -313,6 +319,18 @@ contract DemocraticBallot {
     function helloWorld() pure public returns (string memory){
         return "Hello World from Solidity";
         
+    }
+
+     /**
+     * @dev simple hello world for testing
+     */
+    function activateProduction() public {
+        require(
+            devMode,
+            "Production Mode is already active."
+        );
+        
+        devMode = false;
     }
 
 

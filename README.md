@@ -1,7 +1,7 @@
 # DemocraticVotes
 Solidity Code for demovratic voting blockchain
 
-#Blockchain available at:
+# Blockchain available at:
 
 ```js
 https://kovan.infura.io/v3/349064b180a64b74a9f432841c494b1f
@@ -13,7 +13,7 @@ For deploying install
 and execute:
 	truffle migrate
 
-#Last Deployment Result:
+# Last Deployment Result:
 
 ```js
 2_deploy_ballot.js
@@ -21,40 +21,41 @@ and execute:
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > block number:        20701749
-   > block timestamp:     1599247366
+   > block number:        20721837
+   > block timestamp:     1599327816
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             0.53618499
-   > gas used:            2188039 (0x216307)
+   > balance:             1.48658012
+   > gas used:            2321514 (0x236c6a)
    > gas price:           2 gwei
    > value sent:          0 ETH
-   > total cost:          0.004376078 ETH
+   > total cost:          0.004643028 ETH
 
    -------------------------------------
-   > Total cost:         0.004376078 ETH
+   > Total cost:         0.004643028 ETH
+
 
 2_deploy_ballot.js
 ==================
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > transaction hash:    0xde17df26793075b5bcfc06a8bea188d528ee6401361fac462bee2eda88c90dc1
+   > transaction hash:    0xbf4a33786f1c3370f5c85189a013842c2851410a3b643abd0e6823935752f095
    > Blocks: 2            Seconds: 4
-   > contract address:    0xB665E90904c641f91f31a13da3Ab75e5a8034037
-   > block number:        20701758
-   > block timestamp:     1599247392
+   > contract address:    0x9619f325dC945Fd5311158f0B7d792Ff6a1fc22d
+   > block number:        20721847
+   > block timestamp:     1599327840
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             0.492123
-   > gas used:            2233039 (0x2212cf)
+   > balance:             1.44011558
+   > gas used:            2366514 (0x241c32)
    > gas price:           20 gwei
    > value sent:          0 ETH
-   > total cost:          0.04466078 ETH
+   > total cost:          0.04733028 ETH
 
 
    > Saving migration to chain.
    > Saving artifacts
    -------------------------------------
-   > Total cost:          0.04466078 ETH
+   > Total cost:          0.04733028 ETH
 ```
 
 # For Testing Connection:
@@ -78,6 +79,13 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "activateProduction",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [
