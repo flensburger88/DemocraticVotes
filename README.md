@@ -66,6 +66,9 @@ let helloWorld = await instance.helloWorld()
 helloWorld
 ```
 
+Tip: For receiving some Ether use https://faucet.kovan.network
+
+
 
 # Last Abi Code:
 
