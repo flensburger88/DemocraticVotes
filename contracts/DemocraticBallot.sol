@@ -1,8 +1,8 @@
 pragma solidity >=0.4.22 <0.7.0;
 
-//import "github.com/Arachnid/solidity-stringutils/strings.sol";
 
 /** 
+Smart Contract for the Project https://github.com/flensburger88/DemocraticVotes
  */
 contract DemocraticBallot {
 
@@ -75,15 +75,15 @@ contract DemocraticBallot {
                 "VOTE: Only the oracle can transfer new pull requests."
             );
             require(
-                bytes(_pullRequestLink).length == 0,
+                bytes(_pullRequestLink).length > 0,
                 "VOTE: The link needs to be provided."
             );
             require(
-                bytes(_title).length == 0,
+                bytes(_title).length > 0,
                 "VOTE: The title needs to be provided."
             );
             require(
-                bytes(_description).length == 0,
+                bytes(_description).length > 0,
                 "VOTE: The description needs to be provided."
             );
             require(
@@ -95,7 +95,7 @@ contract DemocraticBallot {
             
             
             require(
-                poll.voteEnd > 0 ,
+                poll.voteEnd == 0 ,
                 "VOTE: The pull request is already transfered."
             );
         }
@@ -160,7 +160,7 @@ contract DemocraticBallot {
     function vote(uint key, bool approve, address voter) private {
         Poll storage poll = polls[key];
         require(
-            poll.voteEnd == 0,
+            poll.voteEnd > 0,
             "VOTE: The required poll does not exist"
         );
         require(
@@ -189,7 +189,7 @@ contract DemocraticBallot {
         if(!devMode){
             require(
                 msg.sender == oracle,
-                "Only the oracle can transfer new pull requests."
+                "VOTE: Only the oracle can transfer new pull requests."
             );
         }
         
@@ -215,19 +215,19 @@ contract DemocraticBallot {
         if(!devMode){
             require(
                 msg.sender == oracle,
-                "Only the oracle is allowed to perform this."
+                "VOTE: Only the oracle is allowed to perform this."
             );
         }
 
         Poll storage poll = polls[pollKey];
         
         require(
-            poll.voteEnd == 0,
-            "The pull request does not exist."
+            poll.voteEnd > 0,
+            "VOTE: The pull request does not exist."
         );
         require(
             poll.voteEnd < now,
-            "The pull has not ended yet."
+            "VOTE: The pull has not ended yet."
         );
         
         poll.isTransferd = true;
@@ -293,12 +293,12 @@ contract DemocraticBallot {
         Poll storage poll = polls[key];
         
         require(
-            poll.voteEnd == 0,
-            "The pull request does not exist."
+            poll.voteEnd > 0,
+            "VOTE: The pull request does not exist."
         );
         require(
             poll.voteEnd < now,
-            "The pull has not ended yet."
+            "VOTE: The pull has not ended yet."
         );
         
         return calcVotingResultMajority(poll);
@@ -318,7 +318,7 @@ contract DemocraticBallot {
      * @dev simple hello world for testing
      */
     function helloWorld() pure public returns (string memory){
-        return "Hello World from Solidity";
+        return "VOTE: Hello World from Solidity";
         
     }
 
@@ -328,34 +328,10 @@ contract DemocraticBallot {
     function activateProduction() public {
         require(
             devMode,
-            "Production Mode is already active."
+            "VOTE: Production Mode is already active."
         );
         
         devMode = false;
     }
-
-
-    /*
-    function concat(string memory _base, string memory _value) internal pure returns (string memory) {
-        bytes memory _baseBytes = bytes(_base);
-        bytes memory _valueBytes = bytes(_value);
-
-        string memory _tmpValue = new string(_baseBytes.length + _valueBytes.length);
-        bytes memory _newValue = bytes(_tmpValue);
-
-        uint i;
-        uint j;
-
-        for(i=0; i<_baseBytes.length; i++) {
-            _newValue[j++] = _baseBytes[i];
-        }
-
-        for(i=0; i<_valueBytes.length; i++) {
-            _newValue[j++] = _valueBytes[i++];
-        }
-
-        return string(_newValue);
-    }
-    */    
 
 }

@@ -16,23 +16,28 @@ and execute:
 # Last Deployment Result:
 
 ```js
+Compiling your contracts...
+===========================
+> Compiling .\contracts\DemocraticBallot.sol
+> Compiled successfully using:
+   - solc: 0.5.16+commit.9c3226ce.Emscripten.clang
 
 2_deploy_ballot.js
 ==================
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > block number:        20804376
-   > block timestamp:     1599660252
+   > block number:        20807553
+   > block timestamp:     1599673029
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             1.451638024
-   > gas used:            2335892 (0x23a494)
+   > balance:             1.3968244
+   > gas used:            2318770 (0x2361b2)
    > gas price:           2 gwei
    > value sent:          0 ETH
-   > total cost:          0.004671784 ETH
+   > total cost:          0.00463754 ETH
 
    -------------------------------------
-   > Total cost:         0.004671784 ETH
+   > Total cost:          0.00463754 ETH
 
 
 2_deploy_ballot.js
@@ -40,23 +45,23 @@ and execute:
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > transaction hash:    0x38bb1e11e996fff37953ac81514b6b343ec35214fd6675442be0f5de3a980cbd
-   > Blocks: 1            Seconds: 4
-   > contract address:    0xE2614C60225Cc8641410227681861E8D97c4bAeD
-   > block number:        20804389
-   > block timestamp:     1599660284
+   > transaction hash:    0xda9c5f44dcd015d69155bb625bfb082ba7fa3b2a141782353daba169dddc7523
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x478190f0327E27a3C9d1E8E55e3D592bBB3ab270
+   > block number:        20807561
+   > block timestamp:     1599673044
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             1.40491468
-   > gas used:            2380892 (0x24545c)
+   > balance:             1.35418654
+   > gas used:            2363770 (0x24117a)
    > gas price:           20 gwei
    > value sent:          0 ETH
-   > total cost:          0.04761784 ETH
+   > total cost:          0.0472754 ETH
 
-
-   > Saving migration to chain.
    > Saving artifacts
    -------------------------------------
-   > Total cost:          0.04761784 ETH
+   > Total cost:           0.0472754 ETH
+
+
 ```
 
 # For Testing Connection:
