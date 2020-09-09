@@ -22,45 +22,44 @@ Compiling your contracts...
 > Compiled successfully using:
    - solc: 0.5.16+commit.9c3226ce.Emscripten.clang
 
+
 2_deploy_ballot.js
 ==================
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > block number:        20807553
-   > block timestamp:     1599673029
+   > block number:        20808018
+   > block timestamp:     1599674909
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             1.3968244
-   > gas used:            2318770 (0x2361b2)
+   > balance:             1.347188172
+   > gas used:            2319634 (0x236512)
    > gas price:           2 gwei
    > value sent:          0 ETH
-   > total cost:          0.00463754 ETH
+   > total cost:          0.004639268 ETH
 
    -------------------------------------
-   > Total cost:          0.00463754 ETH
-
+   > Total cost:         0.004639268 ETH
 
 2_deploy_ballot.js
 ==================
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > transaction hash:    0xda9c5f44dcd015d69155bb625bfb082ba7fa3b2a141782353daba169dddc7523
+   > transaction hash:    0xc32a6e7094986062354a6d8bdf7db1fe946981ec65a176dced02815be13a70db
    > Blocks: 0            Seconds: 0
-   > contract address:    0x478190f0327E27a3C9d1E8E55e3D592bBB3ab270
-   > block number:        20807561
-   > block timestamp:     1599673044
+   > contract address:    0x66cde863FFe6FF117b40179b1C22F81579a58C72
+   > block number:        20808027
+   > block timestamp:     1599674924
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             1.35418654
-   > gas used:            2363770 (0x24117a)
+   > balance:             1.30453476
+   > gas used:            2364634 (0x2414da)
    > gas price:           20 gwei
    > value sent:          0 ETH
-   > total cost:          0.0472754 ETH
+   > total cost:          0.04729268 ETH
 
    > Saving artifacts
    -------------------------------------
-   > Total cost:           0.0472754 ETH
-
+   > Total cost:          0.04729268 ETH
 
 ```
 
