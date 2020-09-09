@@ -72,33 +72,34 @@ contract DemocraticBallot {
         if(!devMode){
             require(
                 msg.sender == oracle,
-                "Only the oracle can transfer new pull requests."
+                "VOTE: Only the oracle can transfer new pull requests."
+            );
+            require(
+                bytes(_pullRequestLink).length == 0,
+                "VOTE: The link needs to be provided."
+            );
+            require(
+                bytes(_title).length == 0,
+                "VOTE: The title needs to be provided."
+            );
+            require(
+                bytes(_description).length == 0,
+                "VOTE: The description needs to be provided."
+            );
+            require(
+                _voteEnd > now,
+                "VOTE: The end of the vote needs to be in the future."
+            );
+            
+            Poll storage poll = getPoll(_pullRequestId, _hostingplatform);
+            
+            
+            require(
+                poll.voteEnd > 0 ,
+                "VOTE: The pull request is already transfered."
             );
         }
-        require(
-            bytes(_pullRequestLink).length == 0,
-            "The link needs to be provided."
-        );
-        require(
-            bytes(_title).length == 0,
-            "The title needs to be provided."
-        );
-        require(
-            bytes(_description).length == 0,
-            "The description needs to be provided."
-        );
-        require(
-            _voteEnd > now,
-            "The end of the vote needs to be in the future."
-        );
-        
-        Poll storage poll = getPoll(_pullRequestId, _hostingplatform);
-        
-        
-        require(
-            poll.voteEnd > 0 ,
-            "The pull request is already transfered."
-        );
+
         
         polls.push(Poll({
             pullRequestLink    :	 _pullRequestLink ,
@@ -142,7 +143,7 @@ contract DemocraticBallot {
         if(!devMode){
             require(
                 msg.sender == oracle,
-                "Only the oracle can transfer new pull requests."
+                "VOTE: Only the oracle can transfer new pull requests."
             );
         }
 
@@ -160,15 +161,15 @@ contract DemocraticBallot {
         Poll storage poll = polls[key];
         require(
             poll.voteEnd == 0,
-            "The required poll does not exist"
+            "VOTE: The required poll does not exist"
         );
         require(
             poll.voteEnd > now,
-            "The poll expired"
+            "VOTE: The poll expired"
         );
         require(
             !hasVoted(poll, voter),
-            "The required poll does not exist"
+            "VOTE: The required poll does not exist"
         );
         
         if(approve){

@@ -16,22 +16,23 @@ and execute:
 # Last Deployment Result:
 
 ```js
+
 2_deploy_ballot.js
 ==================
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > block number:        20721837
-   > block timestamp:     1599327816
+   > block number:        20804376
+   > block timestamp:     1599660252
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             1.48658012
-   > gas used:            2321514 (0x236c6a)
+   > balance:             1.451638024
+   > gas used:            2335892 (0x23a494)
    > gas price:           2 gwei
    > value sent:          0 ETH
-   > total cost:          0.004643028 ETH
+   > total cost:          0.004671784 ETH
 
    -------------------------------------
-   > Total cost:         0.004643028 ETH
+   > Total cost:         0.004671784 ETH
 
 
 2_deploy_ballot.js
@@ -39,23 +40,23 @@ and execute:
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > transaction hash:    0xbf4a33786f1c3370f5c85189a013842c2851410a3b643abd0e6823935752f095
-   > Blocks: 2            Seconds: 4
-   > contract address:    0x9619f325dC945Fd5311158f0B7d792Ff6a1fc22d
-   > block number:        20721847
-   > block timestamp:     1599327840
+   > transaction hash:    0x38bb1e11e996fff37953ac81514b6b343ec35214fd6675442be0f5de3a980cbd
+   > Blocks: 1            Seconds: 4
+   > contract address:    0xE2614C60225Cc8641410227681861E8D97c4bAeD
+   > block number:        20804389
+   > block timestamp:     1599660284
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             1.44011558
-   > gas used:            2366514 (0x241c32)
+   > balance:             1.40491468
+   > gas used:            2380892 (0x24545c)
    > gas price:           20 gwei
    > value sent:          0 ETH
-   > total cost:          0.04733028 ETH
+   > total cost:          0.04761784 ETH
 
 
    > Saving migration to chain.
    > Saving artifacts
    -------------------------------------
-   > Total cost:          0.04733028 ETH
+   > Total cost:          0.04761784 ETH
 ```
 
 # For Testing Connection:
