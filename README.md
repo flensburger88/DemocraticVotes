@@ -6,6 +6,8 @@ Solidity Code for demovratic voting blockchain
 ```js
 https://kovan.infura.io/v3/349064b180a64b74a9f432841c494b1f
 ```
+Byte code uploaded via https://kovan.etherscan.io/verifyContract
+
 
 # Deployment
 For deploying install 
@@ -16,7 +18,6 @@ and execute:
 # Last Deployment Result:
 
 ```js
-
 Compiling your contracts...
 ===========================
 > Compiling .\contracts\DemocraticBallot.sol
@@ -25,22 +26,23 @@ Compiling your contracts...
 
 
 
+
 2_deploy_ballot.js
 ==================
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > block number:        20841806
-   > block timestamp:     1599811393
+   > block number:        20847115
+   > block timestamp:     1599832824
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             1.29750654
-   > gas used:            2334560 (0x239f60)
+   > balance:             1.246754598
+   > gas used:            2735381 (0x29bd15)
    > gas price:           2 gwei
    > value sent:          0 ETH
-   > total cost:          0.00466912 ETH
+   > total cost:          0.005470762 ETH
 
    -------------------------------------
-   > Total cost:          0.00466912 ETH
+   > Total cost:         0.005470762 ETH
 
 
 2_deploy_ballot.js
@@ -48,22 +50,21 @@ Compiling your contracts...
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > transaction hash:    0x8f676414c885cd6cb2835ae3053cfc3324c5decd751220bcd0c00f8c64f07087
-   > Blocks: 1            Seconds: 4
-   > contract address:    0x33D2ad36C98E563F2930D0f7Dc219b1B8346Ae10
-   > block number:        20841815
-   > block timestamp:     1599811412
+   > transaction hash:    0x572fcd2ccf8bd13af2ae71fe518d01da8faec9f8effc91d059bd4aa72f239876
+   > Blocks: 0            Seconds: 4
+   > contract address:    0x7d37f9c1B9BF61ae537f82B80A67f8CAE078Bd23
+   > block number:        20847123
+   > block timestamp:     1599832844
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             1.25458446
-   > gas used:            2379560 (0x244f28)
+   > balance:             1.19661774
+   > gas used:            2780381 (0x2a6cdd)
    > gas price:           20 gwei
    > value sent:          0 ETH
-   > total cost:          0.0475912 ETH
+   > total cost:          0.05560762 ETH
 
    > Saving artifacts
    -------------------------------------
-   > Total cost:           0.0475912 ETH
-
+   > Total cost:          0.05560762 ETH
 
 
 ```
@@ -87,17 +88,21 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 [
 	{
 		"inputs": [],
+		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
 	{
+		"constant": false,
 		"inputs": [],
 		"name": "activateProduction",
 		"outputs": [],
+		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
+		"constant": false,
 		"inputs": [
 			{
 				"internalType": "string",
@@ -112,10 +117,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 		],
 		"name": "appliedOnHostingPlatform",
 		"outputs": [],
+		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
+		"constant": false,
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -125,10 +132,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 		],
 		"name": "appliedOnHostingPlatform",
 		"outputs": [],
+		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [],
 		"name": "getNextVoteFinishedButUntransfered",
 		"outputs": [
@@ -138,10 +147,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 				"type": "uint256"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "string",
@@ -162,10 +173,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 				"type": "uint256"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [],
 		"name": "getPollLength",
 		"outputs": [
@@ -175,10 +188,54 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 				"type": "uint256"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "voteindex",
+				"type": "uint256"
+			}
+		],
+		"name": "getVotersApprove",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "voteindex",
+				"type": "uint256"
+			}
+		],
+		"name": "getVotersDeny",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -194,10 +251,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 				"type": "bool"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "string",
@@ -218,10 +277,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 				"type": "bool"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [],
 		"name": "helloWorld",
 		"outputs": [
@@ -231,10 +292,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 				"type": "string"
 			}
 		],
+		"payable": false,
 		"stateMutability": "pure",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [],
 		"name": "oracle",
 		"outputs": [
@@ -244,10 +307,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 				"type": "address"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -303,10 +368,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 				"type": "uint256"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": false,
 		"inputs": [
 			{
 				"internalType": "string",
@@ -341,10 +408,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 		],
 		"name": "submitNewPoll",
 		"outputs": [],
+		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
+		"constant": false,
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -359,10 +428,12 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 		],
 		"name": "vote",
 		"outputs": [],
+		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
+		"constant": false,
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -382,6 +453,7 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 		],
 		"name": "voteFake",
 		"outputs": [],
+		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
