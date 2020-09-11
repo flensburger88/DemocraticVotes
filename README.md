@@ -16,6 +16,7 @@ and execute:
 # Last Deployment Result:
 
 ```js
+
 Compiling your contracts...
 ===========================
 > Compiling .\contracts\DemocraticBallot.sol
@@ -23,43 +24,47 @@ Compiling your contracts...
    - solc: 0.5.16+commit.9c3226ce.Emscripten.clang
 
 
+
 2_deploy_ballot.js
 ==================
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > block number:        20808018
-   > block timestamp:     1599674909
+   > block number:        20841806
+   > block timestamp:     1599811393
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             1.347188172
-   > gas used:            2319634 (0x236512)
+   > balance:             1.29750654
+   > gas used:            2334560 (0x239f60)
    > gas price:           2 gwei
    > value sent:          0 ETH
-   > total cost:          0.004639268 ETH
+   > total cost:          0.00466912 ETH
 
    -------------------------------------
-   > Total cost:         0.004639268 ETH
+   > Total cost:          0.00466912 ETH
+
 
 2_deploy_ballot.js
 ==================
 
    Deploying 'DemocraticBallot'
    ----------------------------
-   > transaction hash:    0xc32a6e7094986062354a6d8bdf7db1fe946981ec65a176dced02815be13a70db
-   > Blocks: 0            Seconds: 0
-   > contract address:    0x66cde863FFe6FF117b40179b1C22F81579a58C72
-   > block number:        20808027
-   > block timestamp:     1599674924
+   > transaction hash:    0x8f676414c885cd6cb2835ae3053cfc3324c5decd751220bcd0c00f8c64f07087
+   > Blocks: 1            Seconds: 4
+   > contract address:    0x33D2ad36C98E563F2930D0f7Dc219b1B8346Ae10
+   > block number:        20841815
+   > block timestamp:     1599811412
    > account:             0x3F60756BEA11966E4343e382E1a7A1832B64a001
-   > balance:             1.30453476
-   > gas used:            2364634 (0x2414da)
+   > balance:             1.25458446
+   > gas used:            2379560 (0x244f28)
    > gas price:           20 gwei
    > value sent:          0 ETH
-   > total cost:          0.04729268 ETH
+   > total cost:          0.0475912 ETH
 
    > Saving artifacts
    -------------------------------------
-   > Total cost:          0.04729268 ETH
+   > Total cost:           0.0475912 ETH
+
+
 
 ```
 
@@ -150,6 +155,19 @@ Tip: For receiving some Ether use https://faucet.kovan.network
 			}
 		],
 		"name": "getPollIndex",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getPollLength",
 		"outputs": [
 			{
 				"internalType": "uint256",

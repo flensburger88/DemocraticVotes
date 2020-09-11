@@ -204,6 +204,13 @@ contract DemocraticBallot {
         }
         return 0;
     }
+	
+	     /**
+     * @dev Returns length of the poll array
+     */
+    function getPollLength() view public returns (uint){
+        return polls.length;
+    }
     
     
    
