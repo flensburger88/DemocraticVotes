@@ -86,11 +86,7 @@ contract DemocraticBallot {
 		require(
 			bytes(_title).length > 0,
 			"VOTE: The title needs to be provided."
-		);
-		require(
-			bytes(_description).length > 0,
-			"VOTE: The description needs to be provided."
-		);
+		);		
 		require(
 			_voteEnd > now,
 			"VOTE: The end of the vote needs to be in the future."
@@ -107,7 +103,7 @@ contract DemocraticBallot {
 
 
         polls.push(Poll({
-            pullRequestLink    :	 _pullRequestLink ,
+            pullRequestLink    :   _pullRequestLink ,
             pullRequestId      :   _pullRequestId ,
             hostingplatform    :   _hostingplatform ,
             title              :   _title ,
