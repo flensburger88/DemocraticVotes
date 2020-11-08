@@ -202,7 +202,8 @@ contract DemocraticBallot {
     }
 
     /**
-     * @dev This is the internal voting method, to test this smart contract without having to many accounts. It should be deactivated in productive use
+     * @dev This is the internal voting method, to test this smart contract without having 
+	 * to many accounts. It should be deactivated in productive use
      * @param key the pull request index to vote for / can be received via getKey getPollIndex
      * @param approve true means to acceppt the pull request, false it should be declined
      * @param voter the address that should perform the vote. normaly a user block.
@@ -210,41 +211,27 @@ contract DemocraticBallot {
      */
     function vote(uint key, bool approve, address voter) private {
         Poll storage poll = polls[key];
-        require(
-            poll.voteEnd > 0,
-            "VOTE: The required poll does not exist"
-        );
-        require(
-            poll.voteEnd > now,
-            "VOTE: The poll expired"
-        );
-        require(
-            !hasVoted(poll, voter),
-            "VOTE: You have already voted before"
-        );
+        require( poll.voteEnd > 0, "VOTE: The required poll does not exist" );
+        require( poll.voteEnd > now, "VOTE: The poll expired" );
+        require( !hasVoted(poll, voter), "VOTE: You have already voted before" );
 
-        if(approve){
-            
+        if(approve){            
             address current = oracle;
 		    uint currentIndex = 0;
-
 		    for( currentIndex = 0; currentIndex < poll.votersApproveCount; currentIndex++){
     			current = poll.votersApproveList[current];
 		    }
+			
 		    poll.votersApproveCount += 1;
             poll.votersApprove[voter] = true;
             poll.votersApproveList[current] = voter;
-            
-            
         }else{
-            
-            
             address current = oracle;
 		    uint currentIndex = 0;
-
 		    for( currentIndex = 0; currentIndex < poll.votersDenyCount; currentIndex++){
     			current = poll.votersDenyList[current];
 		    }
+			
 		    poll.votersDenyCount += 1;
             poll.votersDeny[voter] = true;
             poll.votersDenyList[current] = voter;
