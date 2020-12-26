@@ -41,9 +41,20 @@ Byte code uploaded via https://kovan.etherscan.io/verifyContract
 
 # Deployment
 For deploying install 
-	truffle
-and execute:
+	truffle		=> https://www.trufflesuite.com/docs/truffle/getting-started/installation
+
+The truffle api allows to deploy code to an ethereum blockchain.
+In addition, to the setup the authorization needs to be linkend within the api.
+This would be easiest, if the plugin metamask is used
+https://www.trufflesuite.com/docs/truffle/getting-started/truffle-with-metamask
+
+The authorization data from metamask has to be saved, as authorizationprovider. 		
+
+After the connection being established, the smart contract can be deployed to the blockchain via:
 	truffle migrate
+
+in detail: https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations
+
 
 # Last Deployment Result:
 
